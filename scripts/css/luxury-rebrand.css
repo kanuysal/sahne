@@ -1,0 +1,386 @@
+/* ============================================
+   MINA LIDYA HAUTE COUTURE — Luxury Rebrand
+   ============================================ */
+
+/* --- LOCAL FONTS --- */
+@font-face {
+    font-family: 'Brown Sugar';
+    src: url('../../fonts/BrownSugar.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Helvetica Neue';
+    src: url('../../fonts/HelveticaNeue-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Helvetica Neue';
+    src: url('../../fonts/HelveticaNeue-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Nullify requests for legacy variants that no longer exist as files */
+@font-face {
+    font-family: 'HelveticaNeue-Medium';
+    src: local('Helvetica Neue');
+}
+
+@font-face {
+    font-family: 'HelveticaNeue-Light';
+    src: local('Helvetica Neue');
+}
+
+@font-face {
+    font-family: 'HelveticaNeue';
+    src: local('Helvetica Neue');
+}
+
+/* --- CSS VARIABLES --- */
+:root {
+    --heading-font: 'Brown Sugar', 'Italiana', serif;
+    --body-font: 'Helvetica Neue', 'EB Garamond', serif;
+    --accent-color: #fff;
+    --dim-color: rgba(255, 255, 255, 0.5);
+}
+
+/* --- GLOBAL TYPOGRAPHY --- */
+body,
+p,
+p a,
+span,
+label,
+input,
+textarea,
+li {
+    font-family: var(--body-font) !important;
+    font-weight: 300;
+}
+
+h1,
+h2,
+h3,
+h1 span,
+h2 span,
+h3 span,
+.field .field-title,
+ul#menu li div,
+.button,
+button,
+#mobile-menu h2 div {
+    font-family: var(--heading-font) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em;
+}
+
+.numeral,
+.date:before,
+.numeral em {
+    font-family: var(--heading-font) !important;
+}
+
+/* --- LOGO --- */
+header .wrapper #logo {
+    background-image: none !important;
+    width: auto !important;
+    height: auto !important;
+    transform: none !important;
+    margin-top: 0 !important;
+}
+
+header .wrapper #logo:after {
+    content: "MINA LIDYA";
+    font-family: var(--heading-font);
+    font-size: 22px;
+    color: #fff;
+    letter-spacing: 5px;
+    display: block;
+    padding: 10px 0;
+}
+
+/* --- INTRO SCREEN --- */
+#intro-container:before {
+    background-image: none !important;
+    content: "MINA LIDYA";
+    font-family: var(--heading-font);
+    font-size: 36px;
+    color: #fff;
+    letter-spacing: 10px;
+    text-align: center;
+    width: 100% !important;
+    height: auto !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+/* --- HEADER LINKS --- */
+header .lab-links div {
+    font-family: var(--body-font);
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+/* --- NAVIGATION MENU --- */
+/* Desktop menu: large title + sub-text from data-label */
+ul#menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 15px;
+}
+
+ul#menu li {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+ul#menu li div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: clamp(36px, 6vw, 64px) !important;
+    line-height: 1 !important;
+    padding: 0;
+}
+
+ul#menu li div:after {
+    display: none;
+    /* Hide old after content */
+}
+
+ul#menu li div:before {
+    content: attr(data-label);
+    display: block;
+    font-family: var(--body-font) !important;
+    font-weight: 300 !important;
+    font-size: 11px !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+    color: var(--dim-color);
+    margin-right: 3vw;
+    margin-top: 10px;
+    white-space: nowrap;
+}
+
+/* Mobile menu: large titles */
+#mobile-menu h2 {
+    font-size: clamp(36px, 10vw, 80px) !important;
+    line-height: 1.1 !important;
+}
+
+#mobile-menu h2 div {
+    font-family: var(--heading-font) !important;
+    margin-bottom: 8px;
+}
+
+/* --- LAB SCENE CONTENT --- */
+/* Left-side text overlay per slide */
+#lab-scene-content [data-lab-slide] p {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.08em !important;
+    font-family: var(--body-font) !important;
+    margin-bottom: 20px;
+}
+
+#lab-scene-content [data-lab-slide] p:first-of-type {
+    font-family: var(--heading-font) !important;
+    font-size: 11px !important;
+    letter-spacing: 3px !important;
+    opacity: 0.6;
+}
+
+/* --- SOCIAL ICONS (Remove 404 background images) --- */
+#navigation #navigation-content #socials>div,
+#socials>div {
+    background-image: none !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 12px !important;
+    filter: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+#navigation #navigation-content #socials>div:after {
+    font-family: var(--body-font);
+    font-size: 12px;
+    color: #fff;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+#navigation #navigation-content #socials>div.instagram:after {
+    content: "Instagram";
+}
+
+#navigation #navigation-content #socials>div.linkedin:after {
+    content: "WhatsApp";
+}
+
+#navigation #navigation-content #socials>div.behance:after {
+    content: "Pinterest";
+}
+
+#navigation #navigation-content #socials>div.dribbble:after {
+    display: none;
+}
+
+#navigation #navigation-content #socials>div.awwwards:after {
+    display: none;
+}
+
+/* --- CUSTOM CURSOR --- */
+* {
+    cursor: none !important;
+}
+
+#cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 48px;
+    height: 48px;
+    margin: -24px 0 0 -24px;
+    pointer-events: none;
+    z-index: 99999;
+    transition: opacity 0.3s;
+    /* No mix-blend-mode — keeps cursor visible on dark 3D canvas */
+}
+
+#cursor:before {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 48px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    transition: transform 0.25s, background 0.25s;
+}
+
+#cursor.disable,
+#cursor.hide {
+    opacity: 0;
+}
+
+#cursor.hover-state:before {
+    transform: scale(1.5);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+#cursor.iframe-disable {
+    opacity: 0.3;
+}
+
+/* No scroll indicator - clean ring cursor only */
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* --- FOOTER --- */
+footer {
+    font-family: var(--body-font) !important;
+    font-size: 12px !important;
+    letter-spacing: 1px;
+}
+
+footer div[data-internal-link]:hover {
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+/* --- SCENE BACKGROUND FALLBACK --- */
+#lab-scene-container {
+    background: #020202;
+}
+
+/* --- H2 SLIDE TITLES (scene-content) --- */
+#scene-content h2 {
+    font-size: clamp(40px, 8vw, 100px) !important;
+    line-height: 0.9 !important;
+    letter-spacing: -0.01em;
+}
+
+/* --- LAB LINKS (category nav in header) --- */
+.lab-links a {
+    letter-spacing: 2px !important;
+    font-weight: 300 !important;
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media screen and (max-width: 1280px) {
+    #lab-scene-content [data-lab-slide] p {
+        font-size: 13px !important;
+    }
+}
+
+/* --- LAB SCENE CONTENT — FORCE VISIBILITY ---
+   Text overlay sits on top of 3D canvas for left-side slide info. */
+#lab-scene-content {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 10 !important;
+    pointer-events: none !important;
+}
+
+#lab-scene-content>.wrapper {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+}
+
+/* Slides hidden by default, active ones visible */
+#lab-scene-content [data-lab-slide] {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+#lab-scene-content [data-lab-slide].active {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+/* Allow clicking buttons in the overlay */
+#lab-scene-content .button,
+#lab-scene-content a {
+    pointer-events: auto !important;
+    cursor: none !important;
+}
+
+/* --- MENU: prevent Turkish text-transform I→İ conversion ---
+   Hardcode uppercase in HTML and disable text-transform here.  */
+ul#menu li div {
+    text-transform: none !important;
+}
+
+ul#menu li div:after {
+    text-transform: uppercase !important;
+}
+
+#mobile-menu h2 div {
+    text-transform: none !important;
+}
