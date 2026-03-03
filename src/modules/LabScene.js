@@ -249,13 +249,16 @@ const LabScene = (onReadyCallback) => {
             const video = videoElements[index]
             if (!video) return null;
 
-            const source = video.querySelector('source')
-            if (source && !source.src) source.src = source.dataset.src;
-
-            video.load()
-
             // Ensure video metadata is ready
             const texture = new THREE.VideoTexture(video)
+
+            // Cache management: Skip heavy reloading if already initialized
+            if (!video.dataset.initialized) {
+               const source = video.querySelector('source')
+               if (source && !source.src) source.src = source.dataset.src;
+               video.load()
+               video.dataset.initialized = 'true';
+            }
 
             // Only play if ready, otherwise wait for canplay
             if (video.readyState >= 2) {
@@ -321,10 +324,14 @@ const LabScene = (onReadyCallback) => {
          videoElements.forEach((vid, i) => {
             vid.addEventListener('ended', () => {
                const nextIndex = (i + 1) % videoElements.length;
-               const direction = 'down';
                if (!isLocked) {
-                  currentIndex = nextIndex;
-                  updateScreen(direction, currentIndex + 1);
+                  if (nextIndex === 0) {
+                     // Loop back to start
+                     resetScreen();
+                  } else {
+                     currentIndex = nextIndex;
+                     updateScreen('down', currentIndex + 1);
+                  }
                }
             });
          });
@@ -1112,28 +1119,36 @@ const LabScene = (onReadyCallback) => {
 
          renderer.compile(scene, camera)
 
-
          //
-
 
          warmup()
 
-
          //
-
 
          labRenderControl.start()
 
+         // Wait for first video to be ready before calling onReady
+         const resolveReady = () => {
+            if (typeof onReadyCallback === 'function') {
+               requestAnimationFrame(() => onReadyCallback())
+            }
+         };
 
-         //
+         const checkVideoReady = () => {
+            const firstVid = videoElements[0];
+            if (firstVid && firstVid.readyState >= 3) { // HAVE_FUTURE_DATA
+               resolveReady();
+            } else if (firstVid) {
+               firstVid.addEventListener('canplay', resolveReady, { once: true });
+               // Fallback timeout in case video fails to load
+               setTimeout(resolveReady, 5000);
+            } else {
+               resolveReady();
+            }
+         };
 
-
-         if (typeof onReadyCallback === 'function') {
-
-            requestAnimationFrame(() => onReadyCallback())
-
-         }
-
+         // Slight delay to ensure textures are bound
+         setTimeout(checkVideoReady, 500);
 
       })
 
