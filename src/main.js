@@ -1089,11 +1089,11 @@ w.addEventListener('DOMContentLoaded', () => {
             updateScrollHandler()
 
             if (b.getAttribute('data-current') == 'home') {
-               setTimeout(() => homeScene.resume(), 0)
+               setTimeout(() => homeScene && homeScene.resume(), 0)
             }
 
             if (b.getAttribute('data-current') == 'lab') {
-               setTimeout(() => labScene.resume(), transitionDuration / 2)
+               setTimeout(() => labScene && labScene.resume(), transitionDuration / 2)
             }
 
             setTimeout(() => b.classList.remove('closing-navigation'), transitionDuration * 4)
@@ -1102,9 +1102,9 @@ w.addEventListener('DOMContentLoaded', () => {
 
          } else {
 
-            if (b.getAttribute('data-current') == 'home') homeScene.pause()
+            if (b.getAttribute('data-current') == 'home') homeScene && homeScene.pause()
 
-            if (b.getAttribute('data-current') == 'lab') labScene.pause()
+            if (b.getAttribute('data-current') == 'lab') labScene && labScene.pause()
 
             b.classList.add('open-navigation')
 

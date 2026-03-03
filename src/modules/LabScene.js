@@ -59,7 +59,7 @@ let startRender, stopRender, pause, resume, intro, outro;
 
 let introTween, introOpacityTween, outroTween, outroOpacityTween;
 
-let sceneDummyScroller, sceneDummyScrollerHandler, updateScreen, resetScreen, currentIndex, direction, isLocked, touchStartY;
+let sceneDummyScroller, sceneDummyScrollerHandler, goToSlide, updateScreen, resetScreen, currentIndex, direction, isLocked, touchStartY;
 
 
 //
