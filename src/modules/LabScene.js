@@ -252,12 +252,30 @@ const LabScene = (onReadyCallback) => {
             // Ensure video metadata is ready
             const texture = new THREE.VideoTexture(video)
 
+            // Sequential Loading: Start loading the next video after current one is ready
+            const loadSequentially = (idx) => {
+               if (idx >= videoElements.length - 1) return;
+               const nextVid = videoElements[idx + 1];
+               if (nextVid && !nextVid.dataset.initialized) {
+                  const source = nextVid.querySelector('source');
+                  if (source && !source.src) {
+                     source.src = source.dataset.src;
+                     nextVid.load();
+                     nextVid.dataset.initialized = 'true';
+                     // Wait for this one to have enough data before starting the next
+                     nextVid.addEventListener('canplaythrough', () => loadSequentially(idx + 1), { once: true });
+                  }
+               }
+            };
+
             // Cache management: Skip heavy reloading if already initialized
             if (!video.dataset.initialized) {
                const source = video.querySelector('source')
                if (source && !source.src) source.src = source.dataset.src;
                video.load()
                video.dataset.initialized = 'true';
+               // Start sequential loading chain
+               video.addEventListener('canplay', () => loadSequentially(index), { once: true });
             }
 
             // Only play if ready, otherwise wait for canplay
@@ -452,12 +470,22 @@ const LabScene = (onReadyCallback) => {
 
             if (isLocked) return;
 
-            if (dir === 'down' && currentIndex < numSlides - 1) {
+            if (dir === 'down') {
                direction = 'down';
                currentIndex++;
-            } else if (dir === 'up' && currentIndex > 0) {
+               if (currentIndex >= numSlides) {
+                  resetScreen();
+                  lockInput();
+                  return;
+               }
+            } else if (dir === 'up') {
                direction = 'up';
                currentIndex--;
+               if (currentIndex < 0) {
+                  goToSlide('up', numSlides);
+                  lockInput();
+                  return;
+               }
             } else {
                return;
             }
@@ -740,37 +768,40 @@ const LabScene = (onReadyCallback) => {
       //
 
 
-      resetScreen = () => {
+      goToSlide = (dir, index) => {
+         const targetIndex = index - 1;
+         const cameraZ = 5.5 - (targetIndex * 0.33);
+         const screenZ = 1.25; // Base position
 
-         console.log('reset')
+         currentIndex = targetIndex;
+         direction = dir;
 
-         currentIndex = 0;
-         direction = 'down';
-         isLocked = false;
-         touchStartY = 0;
+         // Instant jump for properties that shouldn't animate during reset
+         camera.position.z = cameraZ;
+         screenPlane.position.z = screenZ;
 
-         camera.position.z = 5.5;
-         screenPlane.position.z = 1.25;
+         screenPlane.material.map = createVideoTexture(currentIndex)
+         wallMaterial.map = createVideoTexture(currentIndex)
 
-         screenPlane.material.map = createVideoTexture(0)
-         wallMaterial.map = createVideoTexture(0)
-
-         b.setAttribute('data-lab-slide', 1)
+         b.setAttribute('data-lab-slide', index)
          b.setAttribute('data-lab-dir', direction)
 
          d.querySelectorAll('div[data-lab-slide].active').forEach(el => {
             el.classList.remove('active')
          })
-
-         d.querySelectorAll('div[data-lab-slide="1"]').forEach(el => {
-            el.classList.add('active', 'incoming-down')
+         d.querySelectorAll('div[data-lab-slide="' + index + '"]').forEach(el => {
+            el.classList.add('active')
          })
 
+         // Reset visual classes
          d.querySelectorAll('div[data-lab-slide]').forEach(el => {
-            el.classList.remove('outgoing-down', 'outgoing-up', 'incoming-up')
+            el.classList.remove('outgoing-down', 'outgoing-up', 'incoming-up', 'incoming-down')
          })
+      };
 
-
+      resetScreen = () => {
+         console.log('reset')
+         goToSlide('down', 1);
       } // resetScreen
 
 
