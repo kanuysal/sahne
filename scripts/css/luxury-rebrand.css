@@ -276,10 +276,21 @@ header .wrapper #menu-button span:after {
     display: block;
     width: 48px;
     height: 48px;
-    border: 2px solid red !important;
-    background: red !important;
+    border: 1.5px solid #fff !important;
+    background: transparent !important;
     border-radius: 50%;
     transition: transform 0.25s, background 0.25s;
+}
+
+/* Force visibility regardless of body classes like .index or .home */
+#cursor,
+body.index #cursor,
+body.home #cursor,
+body.loading #cursor,
+body.progress #cursor {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
 }
 
 #cursor.disable,
