@@ -239,6 +239,20 @@ ul#menu li div:before {
     display: none;
 }
 
+/* Override Roman Numerals to Bursa & Valencia */
+.date:before {
+    content: "BURSA & VALENCIA" !important;
+}
+
+/* Override header menu button labels */
+header .wrapper #menu-button span:before {
+    content: "MENÜ" !important;
+}
+
+header .wrapper #menu-button span:after {
+    content: "KAPAT" !important;
+}
+
 /* --- CUSTOM CURSOR --- */
 * {
     cursor: none !important;
@@ -246,8 +260,8 @@ ul#menu li div:before {
 
 #cursor {
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
     width: 48px;
     height: 48px;
     margin: -24px 0 0 -24px;
@@ -262,7 +276,8 @@ ul#menu li div:before {
     display: block;
     width: 48px;
     height: 48px;
-    border: 1px solid #fff;
+    border: 2px solid red !important;
+    background: red !important;
     border-radius: 50%;
     transition: transform 0.25s, background 0.25s;
 }
