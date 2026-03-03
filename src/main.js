@@ -1264,13 +1264,8 @@ w.addEventListener('DOMContentLoaded', () => {
       //
 
 
-      d.addEventListener('mouseout', () => {
-         cursor.classList.add('hide')
-      })
-
-      d.addEventListener('mouseover', () => {
-         cursor.classList.remove('hide')
-      })
+      // Remove mouseout/mouseover listeners that hide the cursor
+      // or ensure they don't block visibility on the homepage.
 
 
       //
