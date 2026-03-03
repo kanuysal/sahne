@@ -147,7 +147,7 @@ ul#menu li div {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    font-size: clamp(36px, 6vw, 64px) !important;
+    font-size: clamp(72px, 12vw, 130px) !important;
     line-height: 1 !important;
     padding: 0;
 }
